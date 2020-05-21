@@ -16,21 +16,16 @@ app.engine(`hbs`, hbs.engine); // регистрируем движок handleba
 
 app.set(`view engine`, `hbs`); // начинаем использовать handlebars
 
-
 app.use(express.static('public')); // добавляем статичиские данные public
-app.use(homeRoutes);
-app.use(addRoutes);
-app.use(coursesRoutes);
-
-// Добавляем роуты
+app.use(express.urlencoded({extended: true})); // для получение данных из формы { title: '12356', price: 'gfgfg', img: 'hjhjjh' }
 
 
-app.get(`/courses`, (req, res) => {
-    res.render(`courses`, {
-        title: `Курсы`,
-        isCourse: true
-    });
-});
+// Добавляем роуты в точку входа
+
+app.use(`/`, homeRoutes);
+app.use(`/add`, addRoutes);
+app.use(`/courses`, coursesRoutes);
+
 
 
 const PORT = process.env.PORT || 3000;
